@@ -19,7 +19,7 @@ const BottomTab = createBottomTabNavigator();
 //       <Stack.Navigator>
 //         <Stack.Screen name="ScreenA" component={ScreenA}/>
 //         <Stack.Screen name="ScreenB" component={ScreenB}/>
-//         <Stack.Screen name="NestedNavigator" component={NestedStackNatigation}/>
+//         <Stack.Screen name="NestedStackNatigation" component={NestedStackNatigation}/>
 //       </Stack.Navigator>
 //     </NavigationContainer>
 //   );
@@ -29,7 +29,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name={"BottomTabNavigation"} component={BottomTabNavigation}/>
+        <Stack.Screen name="NestedBottomTab" component={BottomTabNavigation}/>
         <Stack.Screen name="ScreenB" component={ScreenB}/>
       </Stack.Navigator>
     </NavigationContainer>

@@ -10,9 +10,9 @@ export class NestedStackNatigation extends React.Component {
   render() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Screen A" component={ScreenA}/>
-        <Stack.Screen name="Screen B" component={ScreenB}/>
-        <Stack.Screen name="Screen C" component={ScreenC}/>
+        <Stack.Screen name="ScreenA" component={ScreenA}/>
+        <Stack.Screen name="ScreenB" component={ScreenB}/>
+        <Stack.Screen name="ScreenC" component={ScreenC}/>
       </Stack.Navigator>
     );
   }
