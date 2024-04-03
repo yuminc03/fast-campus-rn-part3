@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { Typography } from './src/components/Typography';
+import { LocalImage } from './src/components/LocalImage';
 
 export default function App() {
   return (
@@ -8,6 +9,11 @@ export default function App() {
       <Typography color='red' fontSize={24}>
         Open up App.js to start working on your app!
       </Typography>
+      <LocalImage 
+        localAsset={require('./assets/favicon.png')} 
+        width={50} 
+        height={50}
+      />
     </View>
   );
 }
