@@ -1,7 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Typography } from './src/components/Typography';
 import { LocalImage } from './src/components/LocalImage';
+import { RemoteImage } from './src/components/RemoteImage';
 
 export default function App() {
   return (
@@ -10,9 +10,14 @@ export default function App() {
         Open up App.js to start working on your app!
       </Typography>
       <LocalImage 
-        localAsset={require('./assets/favicon.png')} 
-        width={50} 
+        localAsset={require('./assets/favicon.png')}
+        width={50}
         height={50}
+      />
+      <RemoteImage 
+        url='https://i.imgur.com/TkIrScD.png'
+        width={200}
+        height={100}
       />
     </View>
   );
