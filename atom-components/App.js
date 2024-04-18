@@ -1,8 +1,12 @@
 import { StyleSheet, View } from 'react-native';
+
 import { Typography } from './src/components/Typography';
 import { LocalImage } from './src/components/LocalImage';
 import { RemoteImage } from './src/components/RemoteImage';
+import { Icon } from './src/components/Icons';
 import { Spacer } from './Spacer';
+import { Badge } from './src/components/Badge';
+import { Button } from './src/components/Button';
 
 export default function App() {
   return (
@@ -33,6 +37,27 @@ export default function App() {
         width={200}
         height={100}
       />
+      <Icon name='home' size={40} color='gray'/>
+      <View style={{ flexDirection: 'row' }}>
+        <Badge fontSize={10}>
+          <Typography>BADGE</Typography>
+        </Badge>
+        <Badge fontSize={5}>
+          <Icon name='home' size={50} color='black'/>
+        </Badge>
+      </View>
+      <View style={{ flexDirection: 'row', marginTop: 32 }}>
+        <Button 
+          onPress={() => {
+            console.log('PRESSED BUTTON');
+          }}
+        >
+          <Typography>TEXT BUTTON</Typography>
+        </Button>
+        <Button>
+          <Icon name='home' size={50} color='skyblue'/>
+        </Button>
+      </View>
     </View>
   );
 }
