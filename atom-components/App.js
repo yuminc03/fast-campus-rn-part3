@@ -4,9 +4,10 @@ import { Typography } from './src/components/Typography';
 import { LocalImage } from './src/components/LocalImage';
 import { RemoteImage } from './src/components/RemoteImage';
 import { Icon } from './src/components/Icons';
-import { Spacer } from './Spacer';
+import { Spacer } from './src/components/Spacer';
 import { Badge } from './src/components/Badge';
 import { Button } from './src/components/Button';
+import { Divider } from './src/components/Divider';
 
 export default function App() {
   return (
@@ -14,9 +15,14 @@ export default function App() {
       <Typography color='red' fontSize={24}>
         Open up App.js to start working on your app!
       </Typography>
+      <Spacer space={20} />
+      <Divider/>
+      <Spacer space={20} />
       <Typography color='black' fontSize={16}>
         TEXT
       </Typography>
+      <Spacer space={20} />
+      <Divider/>
       <Spacer space={40} />
       <View style={{ flexDirection: 'row'}}>
         <LocalImage 
