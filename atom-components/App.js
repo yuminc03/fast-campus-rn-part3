@@ -12,8 +12,16 @@ import { Divider } from './src/components/Divider';
 import { TabIcon } from './src/components/TabIcon';
 import { HeaderWithoutComponent } from './src/components/HeaderWithoutComponent';
 import { Header } from './src/components/Header/Header';
+import { HookTestComponent } from './src/components/HookTestComponent';
+import { useCallback, useState } from 'react';
 
 export default function App() {
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+  const doSum = useCallback(() => {
+    return (a + b);
+  }, [a, b]);
+
   return (
     <SafeAreaProvider>
       <View style={{ flex: 1 }}>
@@ -24,6 +32,16 @@ export default function App() {
           </Header.Group>
           {/* <Header.Icon iconName='close'/> */}
         </Header>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <HookTestComponent a={a} b={b}></HookTestComponent>
+          <Typography>현재 callback으로 계산된 값: {doSum()}</Typography>
+          <Button onPress={() => {
+            console.log('press');
+            setA(a + 1);
+          }}>
+            <Typography>A 더하기</Typography>
+          </Button>
+        </View>
         {/* <HeaderWithoutComponent title='HEADER'/> */}
         {/* <TabIcon iconName='home'/>
         <TabIcon iconName='home' visibleBadge/> */}
