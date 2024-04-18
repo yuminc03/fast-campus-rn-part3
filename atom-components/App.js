@@ -19,10 +19,10 @@ export default function App() {
       <View style={{ flex: 1 }}>
         <Header>
           <Header.Group>
-            <Header.Icon iconName='arrow-back'></Header.Icon>
+            {/* <Header.Icon iconName='arrow-back'></Header.Icon> */}
             <Header.Title title='HEADER'></Header.Title>
           </Header.Group>
-          <Header.Icon iconName='close'/>
+          {/* <Header.Icon iconName='close'/> */}
         </Header>
         {/* <HeaderWithoutComponent title='HEADER'/> */}
         {/* <TabIcon iconName='home'/>
