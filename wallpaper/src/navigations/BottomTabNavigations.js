@@ -22,7 +22,7 @@ export const BottomTabNavigations = () => {
         const iconName = getIconName();
 
         return (
-          <TabIcon iconName={iconName} iconColor={focused ? 'tomato' : 'gray'}/>
+          <TabIcon iconName={iconName} iconColor={color}/>
         );
       }
     })}>
