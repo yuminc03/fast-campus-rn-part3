@@ -13,7 +13,7 @@ import { Icon } from "../components/Icons";
 export const ImageDetailScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { downloading, setDownloading } = useState(false);
+  const [ downloading, setDownloading ] = useState(false);
   const { width } = useWindowDimensions();
   const onPressBack = useCallback(() => {
     navigation.goBack();
@@ -75,7 +75,7 @@ export const ImageDetailScreen = (props) => {
             </View>
           ) : (
             <View style={{ height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-              <Typography color={'white'}>DOWNLOAD</Typography>
+              <Typography fontSize={18} color={'white'}>DOWNLOAD</Typography>
               <Icon name='download' size={24} color='white'/>
             </View>
           )}
