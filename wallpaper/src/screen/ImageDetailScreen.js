@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { View, useWindowDimensions } from "react-native";
+import React, { useCallback, useState } from "react";
+import { ActivityIndicator, View, useWindowDimensions } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
@@ -13,11 +13,13 @@ import { Icon } from "../components/Icons";
 export const ImageDetailScreen = (props) => {
   const navigation = useNavigation();
   const route = useRoute();
+  const { downloading, setDownloading } = useState(false);
   const { width } = useWindowDimensions();
   const onPressBack = useCallback(() => {
     navigation.goBack();
   }, []);
   const onPressDownload = useCallback(async () => {
+    setDownloading(true);
     const downloadResumable = FileSystem.createDownloadResumable(
       route.params.url,
       `${FileSystem.documentDirectory}${new Date().getMilliseconds()}.jpg`
@@ -31,6 +33,7 @@ export const ImageDetailScreen = (props) => {
       console.log('permissionResult: ', permissionResult);
       if (permissionResult.status === 'denied') {
         // 기기에서 못 쓰는 상황
+        setDownloading(false);
         return;
       }
 
@@ -38,6 +41,7 @@ export const ImageDetailScreen = (props) => {
         const requestResult = await MediaLibrary.requestPermissionsAsync();
         console.log(requestResult);
         if (requestResult.status === 'denied') {
+          setDownloading(false);
           return;
         }
       }
@@ -48,6 +52,8 @@ export const ImageDetailScreen = (props) => {
     } catch(error) {
       
     }
+
+    setDownloading(false);
   }, []);
 
   return (
@@ -63,10 +69,16 @@ export const ImageDetailScreen = (props) => {
       </View>
       <Button onPress={onPressDownload}>
         <View style={{ paddingBottom: 24, backgroundColor: 'black' }}>
-          <View style={{ height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Typography color={'white'}>DOWNLOAD</Typography>
-            <Icon name='download' size={24} color='white'/>
-          </View>
+          { downloading ?(
+            <View style={{ height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <ActivityIndicator/>
+            </View>
+          ) : (
+            <View style={{ height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Typography color={'white'}>DOWNLOAD</Typography>
+              <Icon name='download' size={24} color='white'/>
+            </View>
+          )}
         </View>
       </Button>
     </View>
