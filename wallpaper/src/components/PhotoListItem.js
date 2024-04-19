@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { useWindowDimensions } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { Button } from '../components/Button';
 import { RemoteImage } from './RemoteImage';
-import { useNavigation } from "@react-navigation/native";
 
 export const PhotoListItem = (props) => {
   const { width } = useWindowDimensions();

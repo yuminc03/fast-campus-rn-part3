@@ -1,6 +1,6 @@
 import React, { FlatList } from 'react-native';
 import { View } from 'react-native';
-import { Typography } from '../components/Typography';
+
 import { Header } from '../components/Header/Header';
 import { IMAGE_LIST } from '../constants';
 import { PhotoListItem } from '../components/PhotoListItem';

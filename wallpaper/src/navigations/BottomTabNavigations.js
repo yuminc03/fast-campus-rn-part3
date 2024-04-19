@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { ImageListScreen } from '../screen/ImageListScreen';
-import { FavoriteImageListScreen } from "../screen/FavofiteImageListScreen";
+import { FavoriteImageListScreen } from "../screen/FavoriteImageListScreen";
 import { TabIcon } from '../components/TabIcon';
 
 const Tabs = createBottomTabNavigator();
