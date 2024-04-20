@@ -12,11 +12,11 @@ export const countReducer = (state=initialState, action) => {
         count: state.count + 1
       };
 
-      case DELETE_COUNT:
-        return {
-          ... state,
-          count: state.count - 1
-        };
+    case DELETE_COUNT:
+      return {
+        ... state,
+        count: state.count - 1
+      };
   }
 
   return {
