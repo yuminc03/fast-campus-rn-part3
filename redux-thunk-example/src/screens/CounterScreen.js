@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import { View } from 'react-native';
 // import { useDispatch, useSelector } from 'react-redux';
+import { useRecoilState } from 'recoil';
 
 import { Header } from '../components/Header/Header';
 import { Button } from "../components/Button";
@@ -9,9 +10,12 @@ import { Spacer } from "../components/Spacer";
 import { Typography } from "../components/Typography";
 import { addCount, deleteCount } from "../actions/counter";
 import { CounterContext } from "../../App";
+import { counterState } from '../states/counter';
 
 const CounterTitle = () => {
-  const [count] = useContext(CounterContext);
+  // const [count] = useContext(CounterContext);
+  const count = useRecoilValue(counterState);
+
   return (
     <Typography fontSize={20}>
       {`${count}개`}
@@ -20,11 +24,11 @@ const CounterTitle = () => {
 };
 
 export const CounterScreen = (props) => {
-  const [_, setCount] = useContext(CounterContext);
-
+  // const [_, setCount] = useContext(CounterContext);
   // const [value, setValue] = useState(0);
   // const dispatch = useDispatch();
   // const value = useSelector((state) => state.count.count);
+  const [count, setCount] = useRecoilState(counterState);
 
   const onPressMinus = useCallback(() => {
     setCount((value) => value - 1);
@@ -46,7 +50,7 @@ export const CounterScreen = (props) => {
             <Icon name='remove' size={20} color='black'/>
           </Button>
           <Spacer horizontal space={20}/>
-          <CounterTitle/>
+          <CounterTitle count={value}/>
           <Spacer horizontal space={20}/>
           <Button paddingHorizontal={4} paddingVertical={4} onPress={onPressPlus}>
             <Icon name='add' size={20} color='black'/>
