@@ -14,13 +14,16 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "expo": "~50.0.14",
+    "expo-file-system": "~16.0.9",
+    "expo-media-library": "~15.9.2",
     "expo-status-bar": "~1.11.1",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-screens": "~3.29.0",
-    "expo-file-system": "~16.0.9",
-    "expo-media-library": "~15.9.2"
+    "react-redux": "^9.1.1",
+    "redux": "^5.0.1",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
