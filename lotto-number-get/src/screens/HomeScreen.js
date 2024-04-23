@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View } from "react-native";
 import { Header } from '../components/Header/Header';
 import { Spacer } from "../components/Spacer";
@@ -7,8 +7,18 @@ import { Typography } from "../components/Typography";
 
 export const HomeScreen = (props) => {
   const onPressGetNumber = (() => {
-
+    
   }, []);
+  const getNumberBackgroundColor = useCallback(() => {
+    const randomNumber = Math.floor(Math.random() * 10) % 6;
+    if (randomNumber === 0) { return 'pink'; } 
+    if (randomNumber === 1) { return 'skyblue'; }
+    if (randomNumber === 2) { return 'gray'; }
+    if (randomNumber === 2) { return 'green'; }
+    if (randomNumber === 2) { return 'purple'; }
+    return 'black'
+  });
+  
   return (
     <View style={{ flex: 1 }}>
       <Header>
@@ -35,7 +45,7 @@ export const HomeScreen = (props) => {
             {[1, 2, 3, 4, 5, 6].map((item) => {
               return (
                 <View style={{ 
-                  backgroundColor: 'black', 
+                  backgroundColor: getNumberBackgroundColor(item), 
                   width: 40, 
                   height: 40, 
                   borderRadius: 20, 
