@@ -1,21 +1,43 @@
 import React, { useCallback, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSetRecoilState } from 'recoil';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Header } from '../components/Header/Header';
 import { SingleLineInput } from '../components/SingleLineInput';
 import { Button } from '../components/Button';
 import { Typography } from '../components/Typography';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Spacer } from '../components/Spacer';
+import { atomLinkList } from '../states/atomLinkList';
 
 export const AddLinkScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
-  const [url, setUrl] = useState('');
+  const updateList = useSetRecoilState(atomLinkList);
+  const [ url, setUrl ] = useState('');
   const onPressClose = useCallback(() => {
     navigation.goBack();
   }, []);
+  const onPressSave = useCallback(() => {
+    console.log(url)
+    if (url === '') return;
+
+    updateList((prevState) => {
+      const list = [{ 
+        title: '',
+        image: '',
+        link: url,
+        createdAt: new Date().toISOString(),
+      }];
+
+      return {
+        list: list.concat(prevState.list)
+      };
+    });
+
+    setUrl('');
+  }, [url]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -32,12 +54,12 @@ export const AddLinkScreen = () => {
         paddingHorizontal: 24
       }}>
         <SingleLineInput 
-          value={url} 
+          value={url}
           onChangeText={setUrl}
-          placeholder={'https://example.com'}
+          placeholder='https://example.com'
         />
       </View>
-      <Button>
+      <Button onPress={onPressSave}>
         <View style={{ backgroundColor: url === '' ? 'gray' : 'black' }}>
           <View style={{ 
             height: 52, 
@@ -46,8 +68,8 @@ export const AddLinkScreen = () => {
           }}>
             <Typography color='white' fontSize={18}>저장하기</Typography>
           </View>
+          <Spacer space={safeAreaInset.bottom}/>
         </View>
-        <Spacer space={safeAreaInset.bottom}/>
       </Button>
     </View>
   );

@@ -26,7 +26,6 @@ export const SingleLineInput = (props) => {
           setFocused(false);
         }}
       />
-
     </View>
-  )
+  );
 }
