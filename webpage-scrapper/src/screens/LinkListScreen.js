@@ -15,8 +15,8 @@ export const LinkListScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
   const data = useRecoilValue(atomLinkList);
-  const onPressListItem = useCallback(() => {
-    navigation.navigate('LinkDetail');
+  const onPressListItem = useCallback((item) => {
+    navigation.navigate('LinkDetail', {item});
   }, []);
   const onPressAddButton = useCallback(() => {
     navigation.navigate('AddLink');
@@ -34,7 +34,7 @@ export const LinkListScreen = () => {
         data={data.list}
         renderItem={({ item }) => {
           return (
-            <Button onPress={onPressListItem} paddingHorizontal={24} paddingVertical={24}>
+            <Button onPress={() => onPressListItem(item)} paddingHorizontal={24} paddingVertical={24}>
               <View>
                 <Typography fontSize={20}>{item.link}</Typography>
                 <Spacer space={4}/>
