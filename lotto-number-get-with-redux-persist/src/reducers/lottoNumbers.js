@@ -7,12 +7,14 @@ const defaultState = {
 
 export const lottoNumberReducers = (state = defaultState, action) => {
   if (action.type === CREATE_NEW_NUMBERS) {
+    const date = new Date();
+
     return {
       ... state,
       currentNumber: action.numbers,
       history: state.history.concat([
         {
-          date: new Date(),
+          date: `${date.getFullYear()}. ${date.getMonth()}. ${date.getDay()}. ${date.getHours()}:${date.getMinutes()}`,
           numbers: action.numbers,
         }
       ])
@@ -20,5 +22,5 @@ export const lottoNumberReducers = (state = defaultState, action) => {
   }
   return {
     ... state,
-  };
+  }; 
 }
