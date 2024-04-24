@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, View, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSetRecoilState } from 'recoil';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,12 +13,14 @@ import { atomLinkList } from '../states/atomLinkList';
 import { getOpenGraphData } from '../utils/OpenGraphTagUtils';
 import { RemoteImage } from '../components/RemoteImage';
 import { getClipboardString } from '../utils/ClipboardUtils';
+import { Icon } from '../components/Icons';
 
 export const AddLinkScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
   const updateList = useSetRecoilState(atomLinkList);
   const [ url, setUrl ] = useState('');
+  const [ loading, setLoading ] = useState(false);
   const [ metaData, setMetaData ] = useState(null);
   const { width } = useWindowDimensions();
 
@@ -45,8 +47,10 @@ export const AddLinkScreen = () => {
     setUrl('');
   }, [url]);
   const onSubmitEditing = useCallback(async () => {
+    setLoading(true);
     const result = await getOpenGraphData(url);
     setMetaData(result);
+    setLoading(false);
   }, [url]);
   const onGetClipboardString = useCallback(async () => {
     const result = await getClipboardString();
@@ -74,20 +78,58 @@ export const AddLinkScreen = () => {
         <Header.Icon iconName='close' onPress={onPressClose}/>
       </Header>
       <View style={{ 
-        flex: 1, 
-        alignItems: 'center', 
+        flex: 1,
         justifyContent: 'flex-start', 
         paddingTop: 32,
         paddingHorizontal: 24
       }}>
-        <SingleLineInput 
-          value={url}
-          onChangeText={setUrl}
-          placeholder='https://example.com'
-          onSubmitEditing={onSubmitEditing}
-        />
+        <View>
+          <SingleLineInput 
+            value={url}
+            onChangeText={setUrl}
+            placeholder='https://example.com'
+            onSubmitEditing={onSubmitEditing}
+          />
+          <View style={{ 
+            position: 'absolute', 
+            top: 0, 
+            bottom: 0, 
+            right: 0, 
+            borderWidth: 1, 
+            alignItems: 'center', 
+            justifyContent: 'center'
+          }}>
+            <Button 
+              onPress={() => {
+                setUrl('');
+                setMetaData(null);
+              }}
+            >
+              <Icon name={'close'} color='black' size={20}/>
+            </Button>
+          </View>
+        </View>
 
-        {metaData !== null && (
+        { loading ? (
+          <>
+            <Spacer space={20}/>
+            <View style={{ borderWidth: 1, borderRadius: 4, borderColor: 'gray' }}>
+              <Spacer space={(width - 48) * 0.5}/>
+              <Spacer space={50}/>
+              <View stule={{ 
+                position: 'absolute', 
+                left: 0, 
+                right: 0, 
+                top: 0, 
+                bottom: 0, 
+                alignItems: 'center', 
+                justifyContent: 'center'
+              }}>
+                <ActivityIndicator/>
+              </View>
+            </View>
+          </>
+        ) : metaData !== null && (
           <>
             <Spacer space={20}/>
             <View style={{ borderWidth: 1, borderRadius: 4, borderColor: 'gray' }}>
