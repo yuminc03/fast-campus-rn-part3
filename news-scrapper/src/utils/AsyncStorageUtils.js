@@ -7,4 +7,3 @@ export const getItem = (key) => {
 export const setItem = (key, value) => {
   return AsyncStorage.setItem(key, value);
 }
-
