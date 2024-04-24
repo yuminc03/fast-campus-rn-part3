@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux"
+import { setItem } from "../utils/AsyncStorageUtils";
 
 export const GET_NEWS_LIST_REQUEST = 'GET_NEWS_LIST_REQUEST'
 export const GET_NEWS_LIST_SUCCESS = 'GET_NEWS_LIST_SUCCESS'
 export const GET_NEWS_LIST_FAILURE = 'GET_NEWS_LIST_FAILURE'
 
 export const CLIP_NEWS_ITEM = 'CLIP_NEWS_ITEM';
+export const STORAGE_KEY = 'STORAGE_KEY';
 
 export const getNewsList = (query) => (dispatch) => {
   dispatch({type: GET_NEWS_LIST_REQUEST});
@@ -41,4 +43,7 @@ export const clipNewsItem = (newsItem) => (dispatch, getState) => {
     type: CLIP_NEWS_ITEM,
     newsItem
   });
+
+  const lastFavoriteList = getState().news.favoriteNews;
+  setItem(STORAGE_KEY, JSON.stringify(lastFavoriteList));
 }
