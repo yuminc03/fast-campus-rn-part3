@@ -7,7 +7,7 @@ export const NewsListScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       <Header>
-        <Header.Title tilte='NEWS_LIST'/>
+        <Header.Title title='NEWS_LIST'/>
       </Header>
     </View>
   );
