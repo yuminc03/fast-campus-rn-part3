@@ -1,4 +1,4 @@
-import { GET_NEWS_LIST_FAILURE, GET_NEWS_LIST_REQUEST, GET_NEWS_LIST_SUCCESS } from "../actions/news";
+import { CLIP_NEWS_ITEM, GET_NEWS_LIST_FAILURE, GET_NEWS_LIST_REQUEST, GET_NEWS_LIST_SUCCESS } from "../actions/news";
 
 const defaultNewsReducer = {
   favoriteNews: [],
@@ -6,7 +6,7 @@ const defaultNewsReducer = {
   loading: false
 }
 
-export const newsReducer = (state, action) => {
+export const newsReducer = (state = defaultNewsReducer, action) => {
   switch (action.type) {
     case GET_NEWS_LIST_REQUEST:
       return {
@@ -26,6 +26,20 @@ export const newsReducer = (state, action) => {
         ... state,
         loading: false,
         newsList: action.result.items
+      };
+
+    case CLIP_NEWS_ITEM:
+      const hasFavoriteList = state.favoriteNews.filter((item) => item.link === action.newsItem.link).length > 0;
+      if (hasFavoriteList) {
+        return {
+          ... state,
+          favoriteNews: state.favoriteNews.filter((item) => item.link !== action.newsItem.link)
+        };
+      }
+
+      return {
+        ... state,
+        favoriteNews: [...state.favoriteNews, action.newsItem]
       };
   }
 
