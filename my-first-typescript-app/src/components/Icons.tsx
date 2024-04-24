@@ -13,7 +13,13 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 //   }
 // }
 
-export const Icon = (props) => {
+export type IconName = keyof typeof Ionicons.glyphMap;
+
+export const Icon: React.FC<{
+  name: IconName,
+  size: number,
+  color: string,
+}> = (props) => {
   return (
     <Ionicons
       name={props.name}

@@ -9,7 +9,7 @@ import { View } from 'react-native';
 //   }
 // }
 
-export const Divider = (props) => {
+export const Divider: React.FC = (props) => {
   return (
     <View 
       style={{ 
