@@ -33,6 +33,12 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>com.googleusercontent.apps.364904413847-nit1cahkua5ddbvpucd4eg5tesa7ca4k</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
           <string>exp+firebase-integration</string>
         </array>
       </dict>

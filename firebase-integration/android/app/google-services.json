@@ -12,7 +12,12 @@
           "package_name": "com.fastcampus.rn.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "364904413847-av8uktsf69pu9uvmadnta7r374fp8n3b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCdyqvdImtCSdPSWVrc6i07KsE1vR-NnyQ"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364904413847-av8uktsf69pu9uvmadnta7r374fp8n3b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "364904413847-nit1cahkua5ddbvpucd4eg5tesa7ca4k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fastcampus.rn.app"
+              }
+            }
+          ]
         }
       }
     }
