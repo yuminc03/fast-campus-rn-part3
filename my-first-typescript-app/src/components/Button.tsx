@@ -19,7 +19,7 @@ export const Button: React.FC<{
   onPressIn?: () => void,
   onPressOut?: () => void,
   hitSlop?: {left: number, right: number, top: number, bottom: number},
-  backgroundColor: string,
+  backgroundColor?: string,
   paddingHorizontal?: number,
   paddingVertical?: number,
   children: ReactElement | ReactElement[]
