@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text as RNText } from 'react-native';
-import PropTypes from 'prop-types';
 
 // export class Typography extends React.Component {
 //   render() {

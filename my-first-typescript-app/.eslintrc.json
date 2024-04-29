@@ -1,0 +1,6 @@
+{
+  "ignorePatterns": ["babel.config.js"],
+  "rules": {
+    "react/prop-types": "off"
+  }
+}
