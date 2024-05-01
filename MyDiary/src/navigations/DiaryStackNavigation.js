@@ -3,13 +3,21 @@ import React from "react";
 
 import { DiaryListScreen } from '../screens/DiaryListScreen';
 import { DiaryDetailScreen } from '../screens/DiaryDetailScreen';
+import { SettingScreen } from "../screens/SettingScreen";
 
 const Stack = createNativeStackNavigator();
 
 export const DiaryStackNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName="DiaryList"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name='DiaryList' component={DiaryListScreen}/>
+      <Stack.Screen name='DiaryDetail' component={DiaryDetailScreen}/>
+      <Stack.Screen name='Setting' component={SettingScreen}/>
     </Stack.Navigator>
   );
 }

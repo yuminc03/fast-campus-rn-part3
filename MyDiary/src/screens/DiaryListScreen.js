@@ -2,10 +2,12 @@ import React, { useCallback } from "react";
 import { View } from "react-native";
 
 import { Header } from "../components/Header/Header";
+import { useNavigation } from "@react-navigation/native";
 
 export const DiaryListScreen = () => {
+  const navigation = useNavigation();
   const onPressSettings = useCallback(() => {
-
+    navigation.navigate('Setting');
   }, []);
   
   return (
