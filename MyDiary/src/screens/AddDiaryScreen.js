@@ -9,6 +9,8 @@ import { Button } from '../components/Button';
 import { RemoteImage } from '../components/RemoteImage';
 import { Spacer } from '../components/Spacer';
 import { Typography } from '../components/Typography';
+import { SingleLineInput } from '../components/SingleLineInput';
+import { MultiLineInput } from '../components/MultiLineInput';
 
 export const AddDiaryScreen = () => {
   const {width} = useWindowDimensions();
@@ -18,12 +20,16 @@ export const AddDiaryScreen = () => {
       photoHeight: width * 0.5
     };
   }, [width]);
+  
   const [selectedPhotoUrl, setSelectedPhotoUrl] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
   const runImagePickAndUpload = useImagePickedAndUpload();
   const [visibleDatePicker, setVisibleDatePicker] = useState(false);
-  const navigation = useNavigation();
 
+  const navigation = useNavigation();
   const onPressBack = useCallback(() => {
     navigation.goBack();
   }, []);
@@ -82,6 +88,22 @@ export const AddDiaryScreen = () => {
             </Typography>
           </View>
         </Button>
+        <Spacer space={40}/>
+        <View style={{paddingHorizontal: 24}}>
+          <SingleLineInput
+            value={title}
+            onChangeText={setTitle}
+            placeholder='제목을 입력해주세요'
+          />
+        </View>
+        <Spacer space={20}/>
+        <View style={{paddingHorizontal: 24}}>
+          <MultiLineInput
+            value={content}
+            onChangeText={setContent}
+            placeholder='있었던 일을 알려주세요'
+          />
+        </View>
       </ScrollView>
 
       <DateTimePicker
@@ -96,5 +118,5 @@ export const AddDiaryScreen = () => {
         }}
       />
     </View>
-  )
+  );
 }
