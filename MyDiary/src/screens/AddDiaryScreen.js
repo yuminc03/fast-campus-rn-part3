@@ -29,6 +29,16 @@ export const AddDiaryScreen = () => {
   const runImagePickAndUpload = useImagePickedAndUpload();
   const [visibleDatePicker, setVisibleDatePicker] = useState(false);
 
+  const canSave = useMemo(() => {
+    if (selectedDate === null) return false;
+
+    if (title === '') return false;
+
+    if (content === '') return false;
+
+    return true;
+  }, [selectedDate, title, content]);
+
   const navigation = useNavigation();
   const onPressBack = useCallback(() => {
     navigation.goBack();
@@ -43,6 +53,10 @@ export const AddDiaryScreen = () => {
 
   const onPressCalendar = useCallback(() => {
     setVisibleDatePicker(true);
+  }, []);
+
+  const onPressSave = useCallback(() => {
+    
   }, []);
 
   return (
@@ -103,6 +117,20 @@ export const AddDiaryScreen = () => {
             onChangeText={setContent}
             placeholder='있었던 일을 알려주세요'
           />
+        </View>
+        <Spacer space={40}/>
+        <View style={{paddingHorizontal: 24}}>
+          <Button onPress={onPressSave}>
+            <View style={{
+              paddingVertical: 16,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: canSave ? 'black' : 'lightgray',
+              borderRadius: 4,
+            }}>
+              <Typography color={canSave ? 'white' : 'gray'}>등록하기</Typography>
+            </View>
+          </Button>
         </View>
       </ScrollView>
 
