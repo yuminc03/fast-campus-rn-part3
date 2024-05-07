@@ -11,9 +11,12 @@ import { Spacer } from '../components/Spacer';
 import { Typography } from '../components/Typography';
 import { SingleLineInput } from '../components/SingleLineInput';
 import { MultiLineInput } from '../components/MultiLineInput';
+import { useCreateDairy } from '../hooks/useCreateDiary';
 
 export const AddDiaryScreen = () => {
   const {width} = useWindowDimensions();
+  const runCreateDiary = useCreateDairy();
+  
   const photoSize = useMemo(() => {
     return {
       photoWidth: width,
