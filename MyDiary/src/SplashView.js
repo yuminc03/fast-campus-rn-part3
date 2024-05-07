@@ -4,8 +4,8 @@ import { GoogleSigninButton, GoogleSignin } from '@react-native-google-signin/go
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import { useSetRecoilState } from 'recoil';
-import { stateUserInfo } from './states/stateUserInfo';
 
+import { stateUserInfo } from './states/stateUserInfo';
 import { Typography } from "./components/Typography";
 
 export const SplashView = (props) => {
@@ -17,10 +17,10 @@ export const SplashView = (props) => {
     const result = await auth().signInWithCredential(googleCredential);
     // 사용자 정보가 들어오게 되는
     console.log(result);
-    const userDBRefKey = `/users/${result.user.id}`;
+    const userDBRefKey = `/users/${result.user.uid}`;
     const userResult = await database().ref(userDBRefKey).once('value').then((snapshot) => {
       return snapshot.val();
-    })
+    });
     console.log(userResult);
     const now = new Date().toISOString();
 

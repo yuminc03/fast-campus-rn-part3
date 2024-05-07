@@ -14,6 +14,7 @@ export const RootApp = () => {
       />
     );
   }
+  
   return (
     <NavigationContainer>
       <RootStackNavigation/>
