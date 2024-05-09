@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import database from '@react-native-firebase/database';
 
-import { stateDiaryList } from '../state/stateDiaryList';
+import { stateDiaryList } from '../states/stateDiaryList';
 import { useCallback } from "react";
 
 export const useGetDiaryList = () => {

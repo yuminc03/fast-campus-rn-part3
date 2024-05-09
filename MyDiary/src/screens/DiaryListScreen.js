@@ -10,7 +10,7 @@ import { Icon } from "../components/Icons";
 import { RemoteImage } from '../components/RemoteImage';
 import { Spacer } from "../components/Spacer";
 import { Typography } from "../components/Typography";
-import { stateDiaryList } from '../state/stateDiaryList';
+import { stateDiaryList } from '../states/stateDiaryList';
 
 export const DiaryListScreen = () => {
   const navigation = useNavigation();
