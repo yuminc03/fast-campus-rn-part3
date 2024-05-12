@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import database from '@react-native-firebase/database';
+import { useNavigation } from "@react-navigation/native";
 
 import { Header } from "../components/Header/Header";
 import { Spacer } from "../components/Spacer";
 import { PasswordInputBox } from '../components/PasswordInputBox';
 import { stateUserInfo } from '../states/stateUserInfo';
-import database from '@react-native-firebase/database';
-import { useNavigation } from "@react-navigation/native";
 
 export const AddPasswordScreen = () => {
   const [firstInput, setFirstInput] = useState('');
   const [secondInput, setSecondInput] = useState('');
   const [isInputFirst, setIsInputFirst] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null); 
   const userInfo = useRecoilValue(stateUserInfo);
   const navigation = useNavigation();
   
@@ -36,7 +37,11 @@ export const AddPasswordScreen = () => {
     if (firstInput.length <= 4) return;
     if (secondInput.length <= 4) return;
     if (firstInput === secondInput) {
+      // 저장하기
       onCompleteInputPassword();
+    } else {
+      setErrorMessage('비밀번호가 다릅니다.');
+      setSecondInput('');
     }
   }, [firstInput, secondInput]);
 

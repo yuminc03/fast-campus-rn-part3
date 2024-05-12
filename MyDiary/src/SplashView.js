@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { GoogleSigninButton, GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
@@ -10,13 +10,17 @@ import { useGetDiaryList } from "./hooks/useGetDiaryList";
 import { PasswordInputBox } from "./components/PasswordInputBox";
 
 export const SplashView = (props) => {
+  const [loading, setLoading] = useState(false);
   const [showLoginButton, setShowLoginButton] = useState(false);
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [inputPassword, setInputPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(null);
+  
   const [userInfo, setUserInfo] = useRecoilState(stateUserInfo);
   const runGetDiaryList = useGetDiaryList();
 
   const signinUserIdenfify = useCallback(async (idToken) => {
+    setLoading(true);
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     const result = await auth().signInWithCredential(googleCredential);
     // 사용자 정보가 들어오게 되는
@@ -45,6 +49,7 @@ export const SplashView = (props) => {
 
     if (userInfo.password !== '') {
       setShowPasswordInput(true);
+      setLoading(false);
       return;
     }
 
@@ -64,8 +69,10 @@ export const SplashView = (props) => {
   const userSilentLogin = useCallback(async () => {
     try {
       const {idToken} = await GoogleSignin.signInSilently();
+      setLoading(true);
       signinUserIdenfify(idToken);
     } catch(error) {
+      setLoading(false);
       setShowLoginButton(true);
     }
   }, []);
@@ -79,6 +86,7 @@ export const SplashView = (props) => {
       {showLoginButton && <GoogleSigninButton onPress={onPressGoogleLogin}/>}
       {showPasswordInput && (
         <PasswordInputBox
+          errorMessage={passwordError}
           value={inputPassword}
           onChangeText={async (text) => {
             setInputPassword(text);
@@ -94,6 +102,10 @@ export const SplashView = (props) => {
             }
           }}
         />
+      )}
+      
+      {loading && (
+        <ActivityIndicator/>
       )}
     </View>
   );
