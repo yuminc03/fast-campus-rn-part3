@@ -45,7 +45,14 @@ export const SettingScreen = () => {
   }, [userInfo, runImagePickAndUpload]);
 
   const onPressAddPressword = useCallback(() => {
-    
+    navigation.navigate('AddPassword');
+  }, []);
+
+  const onPressClearPassword = useCallback(() => {
+    const userDB = `/users/${userInfo.uid}`;
+    database().ref(userDB).update({
+      password: '',
+    });
   }, []);
 
   return (
@@ -74,7 +81,7 @@ export const SettingScreen = () => {
         <Spacer space={20}/>
         <Divider/>
         <Spacer space={20}/>
-        <Button>
+        <Button onPress={onPressAddPressword}>
           <View style={{
             flexDirection: 'row', 
             alignItems: 'center', 
@@ -86,7 +93,7 @@ export const SettingScreen = () => {
             <Icon name="chevron-forward-outline" size={16}/>
           </View>
         </Button>
-        <Button>
+        <Button onPress={onPressClearPassword}>
           <View style={{
             flexDirection: 'row', 
             alignItems: 'center', 
