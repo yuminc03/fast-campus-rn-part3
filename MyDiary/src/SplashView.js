@@ -19,7 +19,7 @@ export const SplashView = (props) => {
   const [userInfo, setUserInfo] = useRecoilState(stateUserInfo);
   const runGetDiaryList = useGetDiaryList();
 
-  const signinUserIdenfify = useCallback(async (idToken) => {
+  const signinUserIdentify = useCallback(async (idToken) => {
     setLoading(true);
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     const result = await auth().signInWithCredential(googleCredential);
@@ -63,14 +63,13 @@ export const SplashView = (props) => {
   const onPressGoogleLogin = useCallback(async () => {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
     const {idToken} = await GoogleSignin.signIn();
-    signinUserIdenfify(idToken);
+    signinUserIdentify(idToken);
   }, []);
 
   const userSilentLogin = useCallback(async () => {
     try {
       const {idToken} = await GoogleSignin.signInSilently();
-      setLoading(true);
-      signinUserIdenfify(idToken);
+      signinUserIdentify(idToken);
     } catch(error) {
       setLoading(false);
       setShowLoginButton(true);
@@ -98,6 +97,9 @@ export const SplashView = (props) => {
                   lastLoginAt: now,
                 });
                 props.onFinishLoad();
+              } else {
+                setInputPassword('');
+                setPasswordError('비밀번호가 다릅니다.');
               }
             }
           }}
