@@ -13,6 +13,19 @@ const defaultUserInfoReducer = {
 }
 
 export const userInfoReducer = (state=defaultUserInfoReducer, action: TypeUserInfoActions) => {
+  switch (action.type) {
+    case SET_USER_INFO:
+      return {
+        ...state,
+        userInfo: action.user
+      };
+
+      case GET_MY_FEED_SUCCESS:
+        return {
+          ...state,
+          myFeedList: action.list,
+        };
+  }
   
   return {
     ...state

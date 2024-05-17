@@ -109,10 +109,12 @@ export const favoriteFeedRequest = () => {
   };
 }
 
-export const favoriteFeedSuccess = (feedId: FeedInfo['id']) => {
+export const favoriteFeedSuccess = (feedId: FeedInfo['id'], myId: string, action: 'add' | 'del') => {
   return {
     type: FAVORITE_FEED_SUCCESS,
     feedId,
+    myId,
+    action
   };
 }
 
@@ -122,11 +124,23 @@ export const favoriteFeedFailure = () => {
   };
 }
 
-export const favoriteFeed = (item: FeedInfo): TypeFeedListThunkAction => async (dispatch) => {
+export const favoriteFeed = (item: FeedInfo): TypeFeedListThunkAction => async (dispatch, getState) => {
   dispatch(favoriteFeedRequest());
-
+  const myId = getState().userInfo.userInfo?.uid || null;
+  if (myId === null) {
+    dispatch(favoriteFeedFailure());
+    return;
+  }
+  
   await sleep(1000);
-  dispatch(favoriteFeedSuccess(item.id));
+  const hasMyId = item.likeHistory.filter((likeUserId) => likeUserId === myId).length > 0;
+  if (hasMyId) {
+    // 있을 때 빼기
+    dispatch(favoriteFeedSuccess(item.id, myId, 'del'));
+  } else {
+    // 없을 때는 추가하기
+    dispatch(favoriteFeedSuccess(item.id, myId, 'add'));
+  }
 }
 
 export type TypeFeedListThunkAction = ThunkAction<void, RootReducer, undefined, TypeFeedListActions>
