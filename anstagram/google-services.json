@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "817868248409",
+    "project_id": "anstagramtest-e0519",
+    "storage_bucket": "anstagramtest-e0519.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817868248409:android:bbdcd7ca16f516f233a848",
+        "android_client_info": {
+          "package_name": "com.anstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817868248409-un858j3deu6ab4tk7nju5fdhclp9qr7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZbQ1j6PoHO9S4IbdfwOey8KHAbjPdPyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817868248409-un858j3deu6ab4tk7nju5fdhclp9qr7m.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817868248409-31234h89o8cmqb3n1euagcub01qcrtmm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.anstagram"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
