@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { Header } from '../src/components/Header/Header';
+import { Header } from '../components/Header/Header';
 
 export const FeedListScreen: React.FC = () => {
   return (

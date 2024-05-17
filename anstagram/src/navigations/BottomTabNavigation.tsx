@@ -3,8 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HomeScreen } from '../screens/HomeScreen';
 import { MyPageScreen } from '../screens/MyPageScreen';
-import { IconName } from '../src/components/Icons';
-import { TabIcon } from '../src/components/TabIcon';
+import { IconName } from '../components/Icons';
+import { TabIcon } from '../components/TabIcon';
 
 export type BottomTabParamList = {
   Home: undefined,

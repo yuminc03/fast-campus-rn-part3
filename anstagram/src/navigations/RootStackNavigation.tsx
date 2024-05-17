@@ -1,9 +1,10 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp, createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
 import { BottomTabNavigation } from "./BottomTabNavigation";
 import { AddFeedScreen } from "../screens/AddFeedScreen";
 import { FeedListScreen } from "../screens/FeedListScreen";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 
 export type RootStackParamList = {
   BottomTab: undefined,
@@ -32,4 +33,14 @@ export const RootStackNavigation: React.FC = () => {
       <Stack.Screen name='FeedList' component={FeedListScreen} />
     </Stack.Navigator>
   );
+}
+
+// RootStackParamList 중에서 key가 RouteName으로 들어옴!
+// RootStackParamList에서 routeName에 해당하는 param을 읽음
+export const useRootNavigation = <RouteName extends keyof RootStackParamList>() => {
+  return useNavigation<NativeStackNavigationProp<RootStackParamList, RouteName>>();
+} 
+
+export const useRootRoute = <RouteName extends keyof RootStackParamList>() => {
+  return useRoute<RouteProp<RootStackParamList, RouteName>>();
 }
