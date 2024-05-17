@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -7,10 +7,16 @@ import { useTotalFeedList } from '../selectors/feed';
 import { FeedListItem } from '../components/FeedListItem';
 import { TypeFeedListDispatch, getFeedList } from '../actions/feed';
 import { Spacer } from '../components/Spacer';
+import { useRootNavigation } from '../navigations/RootStackNavigation';
 
 export const HomeScreen: React.FC = () => {
+  const rootNavigation = useRootNavigation();
+
   const feedList = useTotalFeedList();
   const dispatch = useDispatch<TypeFeedListDispatch>();
+  const onPressHome = useCallback(() => {
+    rootNavigation.navigate('AddFeed');
+  }, []);
 
   useEffect(() => {
     dispatch(getFeedList());
@@ -20,6 +26,7 @@ export const HomeScreen: React.FC = () => {
     <View style={{flex: 1}}>
       <Header>
         <Header.Title title='Home' />
+        <Header.Icon iconName='add' onPress={onPressHome} />
       </Header>
 
       <FlatList 
