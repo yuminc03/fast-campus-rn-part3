@@ -45,7 +45,7 @@ export const getFeedList = (): TypeFeedListThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_01',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_01',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
@@ -56,7 +56,29 @@ export const getFeedList = (): TypeFeedListThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_02',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_02',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
+    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
+    createdAt: new Date().getTime()
+  },
+  {
+    id: 'ID_03',
+    content: 'CONTENT_03',
+    writer: {
+      name: 'WRITER_NAME_03',
+      uid: 'WRITER_UID',
+    },
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
+    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
+    createdAt: new Date().getTime()
+  },
+  {
+    id: 'ID_04',
+    content: 'CONTENT_04',
+    writer: {
+      name: 'WRITER_NAME_04',
+      uid: 'WRITER_UID',
+    },
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
@@ -142,6 +164,8 @@ export const favoriteFeed = (item: FeedInfo): TypeFeedListThunkAction => async (
     dispatch(favoriteFeedSuccess(item.id, myId, 'add'));
   }
 }
+
+export type TypeFeedListDispatch = ThunkDispatch<RootReducer, undefined, TypeFeedListActions>
 
 export type TypeFeedListThunkAction = ThunkAction<void, RootReducer, undefined, TypeFeedListActions>
 export type TypeFeedListActions = 

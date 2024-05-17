@@ -1,9 +1,10 @@
-import { ThunkAction } from "redux-thunk";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 
 import { sleep } from "../utils/sleep";
 import { RootReducer } from "../store";
 import { FeedInfo } from "../@types/FeedInfo";
 import { UserInfo } from "../@types/UserInfo";
+import { TypeFeedListActions } from "./feed";
 
 export const SET_USER_INFO = 'SET_USER_INFO' as const;
 
@@ -97,6 +98,8 @@ export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
 }
 
 export type TypeUserThunkAction = ThunkAction<Promise<void>, RootReducer, undefined, TypeUserInfoActions>
+export type TypeUserDispatch = ThunkDispatch<RootReducer, undefined, TypeFeedListActions>
+
 export type TypeUserInfoActions = 
  | ReturnType<typeof setUserInfo>
  | ReturnType<typeof getMyFeedRequest>
