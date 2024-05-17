@@ -57,7 +57,7 @@ export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_01',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_01',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
@@ -68,7 +68,7 @@ export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_02',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_02',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
@@ -79,7 +79,7 @@ export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_03',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_03',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
@@ -90,7 +90,7 @@ export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
       name: 'WRITER_NAME_04',
       uid: 'WRITER_UID',
     },
-    imageUrl: 'IMAGE_URL_04',
+    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
     likeHistory: ['UID_01', 'UID_02', 'UID_03'],
     createdAt: new Date().getTime()
   },
