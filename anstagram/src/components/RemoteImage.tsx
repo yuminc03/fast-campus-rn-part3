@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image as RNImage } from 'react-native';
+import { ImageProps, Image as RNImage, StyleProp } from 'react-native';
 
 // export class RemoteImage extends React.Component {
 //   render() {
@@ -15,7 +15,12 @@ import { Image as RNImage } from 'react-native';
 //   };
 // }
 
-export const RemoteImage = (props) => {
+export const RemoteImage: React.FC<{
+  url: string,
+  style?: StyleProp<ImageProps>
+  width: number,
+  height: number,
+}> = (props) => {
   return (
     <RNImage
       source={{ uri: props.url }}

@@ -1,7 +1,6 @@
 import React from "react";
-import { View } from 'react-native';
 import { Badge } from "./Badge";
-import { Icon } from "./Icons";
+import { Icon, IconName } from "./Icons";
 
 // export class TabIcon extends React.Component {
 //   render() {
@@ -23,10 +22,14 @@ import { Icon } from "./Icons";
 //   }
 // }
 
-export const TabIcon = (props) => {
+export const TabIcon: React.FC<{
+  visibleBadge: boolean,
+  iconName: IconName,
+  iconColor: string,
+}> = (props) => {
   if (props.visibleBadge) {
     return (
-      <Badge fontSize={10}>
+      <Badge>
         <Icon name={props.iconName} size={20} color={props.iconColor}/>
       </Badge>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image as RNImage } from 'react-native';
+import { Image as RNImage, StyleProp, ImageProps } from 'react-native';
 
 // export class LocalImage extends React.Component {
 //   render() {
@@ -15,7 +15,12 @@ import { Image as RNImage } from 'react-native';
 //   }
 // }
 
-export const LocalImage = (props) => {
+export const LocalImage: React.FC<{
+  localAsset: number,
+  width: number,
+  height: number,
+  style?: StyleProp<ImageProps>,
+}> = (props) => {
   return (
     <RNImage 
       source={props.localAsset} 

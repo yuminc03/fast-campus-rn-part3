@@ -1,14 +1,22 @@
-import React from "react";
-import { View, Dimensions, useWindowDimensions } from "react-native";
-import { SafeAreaInsetContext, useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { ReactElement } from "react";
+import { View, useWindowDimensions } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Spacer } from "../Spacer";
 import { HeaderTitle } from "./HeaderTitle";
-import { HeaderIcon } from "./HeaderButton";
+import { HeaderIcon } from "./HeaderIcon";
 import { HeaderGroup } from "./HeaderGroup";
+import { IconName } from "../Icons";
 
+type CompoundComposition = {
+  Title?: React.FC<{title: string}>;
+  Icon?: React.FC<{onPress: () => void, iconName: IconName}>
+  Group?: React.FC<{children: ReactElement[]}>
+}
 // const { width } = Dimensions.get('window');
-export const Header = (props) => {
+export const Header: React.FC<{
+  children: ReactElement[]
+}> & CompoundComposition = (props) => {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
 
