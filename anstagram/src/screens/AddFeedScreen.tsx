@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useDispatch } from 'react-redux';
 
 import { Header } from '../components/Header/Header';
 import { useRootNavigation } from '../navigations/RootStackNavigation';
@@ -11,12 +12,15 @@ import { Icon } from '../components/Icons';
 import { MultiLineInput } from '../components/MultiLineInput';
 import { Spacer } from '../components/Spacer';
 import { Typography } from '../components/Typography';
+import { TypeFeedListDispatch, createFeed } from '../actions/feed';
 
 export const AddFeedScreen: React.FC = () => {
   const rootNavigation = useRootNavigation();
   const safeAreaInset = useSafeAreaInsets();
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
   const [inputMessage, setInputMessage] = useState('');
+  const dispatch = useDispatch<TypeFeedListDispatch>();;
+
   const canSave = useMemo(() => {
     if (selectedPhoto === null) return false;
 
@@ -44,8 +48,19 @@ export const AddFeedScreen: React.FC = () => {
     setSelectedPhoto(result.assets[0].uri);
   }, []);
 
-  const onPressSave = useCallback(() => {
+  const onPressSave = useCallback(async () => {
     if (!canSave) return;
+
+    if (selectedPhoto === null) return;
+
+    await dispatch(
+      createFeed({
+        imageUrl: selectedPhoto,
+        content: inputMessage,
+      })
+    );
+
+    rootNavigation.goBack();
   }, [canSave, selectedPhoto, inputMessage]);
 
   return (

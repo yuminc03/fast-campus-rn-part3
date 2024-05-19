@@ -1,8 +1,11 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import storage from '@react-native-firebase/storage';
+import database from '@react-native-firebase/database';
 
 import { FeedInfo } from "../@types/FeedInfo";
 import { RootReducer } from "../store";
 import { sleep } from "../utils/sleep";
+import { Platform } from 'react-native';
 
 export const GET_FEED_LIST_REQUEST = 'GET_FEED_LIST_REQUEST' as const;
 export const GET_FEED_LIST_SUCCESS = 'GET_FEED_LIST_SUCCESS' as const;
@@ -104,25 +107,31 @@ export const createFeedFailure = () => {
   };
 }
 
-export const createFeed = (item: Omit<FeedInfo, 'id' | 'writer' | 'createAt' | 'likeHistory'>): TypeFeedListThunkAction => async (dispatch, getState) => {
+export const createFeed = (item: Omit<FeedInfo, 'id' | 'writer' | 'createdAt' | 'likeHistory'>): TypeFeedListThunkAction => async (dispatch, getState) => {
   dispatch(createFeedRequest());
 
   const createAt = new Date().getTime();
   const userInfo = getState().userInfo.userInfo;
+  const pickPhotoUrlList = item.imageUrl.split('/');
+  const pickPhotoFileName = pickPhotoUrlList[pickPhotoUrlList.length - 1];
+
+  const putFileUrl = await storage().ref(pickPhotoFileName)
+    .putFile(Platform.OS === 'ios' ? item.imageUrl.replace('file://', '') : item.imageUrl)
+    .then((result) => storage().ref(result.metadata.fullPath).getDownloadURL());
 
   await sleep(200);
 
-  dispatch(createFeedSuccess({
-    id: 'ID_010',
-    content: item.content,
-    writer: {
-      name: userInfo?.name ?? 'Unknown',
-      uid: userInfo?.uid ?? 'Unknown',
-    },
-    imageUrl: item.imageUrl,
-    likeHistory: [],
-    createdAt: createAt
-  }));
+  // dispatch(createFeedSuccess({
+  //   id: 'ID_010',
+  //   content: item.content,
+  //   writer: {
+  //     name: userInfo?.name ?? 'Unknown',
+  //     uid: userInfo?.uid ?? 'Unknown',
+  //   },
+  //   imageUrl: item.imageUrl,
+  //   likeHistory: [],
+  //   createdAt: createAt
+  // }));
 }
 
 export const favoriteFeedRequest = () => {
