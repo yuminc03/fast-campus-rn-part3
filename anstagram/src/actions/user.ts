@@ -1,4 +1,6 @@
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 import { sleep } from "../utils/sleep";
 import { RootReducer } from "../store";
@@ -38,13 +40,45 @@ export const getMyFeedFailure = () => {
   };
 }
 
-export const signIn = (): TypeUserThunkAction => async (dispatch) => {
-  await sleep(1000);
-  dispatch(setUserInfo({
-    uid: 'TEST_UID',
-    name: 'TEST_NAME',
-    profileImage: 'TEST_PROFILE_IMAGE',
-  }));
+export const signIn = (idToken: string): TypeUserThunkAction => async (dispatch) => {
+  // await sleep(1000);
+  // dispatch(setUserInfo({
+  //   uid: 'TEST_UID',
+  //   name: 'TEST_NAME',
+  //   profileImage: 'TEST_PROFILE_IMAGE',
+  // }));
+
+  const googleSigninCredential = auth.GoogleAuthProvider.credential(idToken);
+  const signinResult = await auth().signInWithCredential(googleSigninCredential);
+  const userDB = await database().ref(`/users/${signinResult.user.uid}`);
+
+  try {
+    const user = await userDB.once('value').then((snapshot) => snapshot.val());
+    const now = new Date().getTime();
+    if (user === null) {
+      await userDB.set({
+        name: signinResult.user.displayName,
+        profileImage: signinResult.user.photoURL,
+        uid: signinResult.user.uid,
+        createdAt: now,
+        lastLoginAt: now,
+      })
+    } else {
+      await userDB.update({
+        lastLoginAt: now,
+      })
+    }
+  } catch (error) {
+
+  }
+
+  dispatch(
+    setUserInfo({
+      uid: signinResult.user.uid,
+      name: signinResult.user.displayName ?? 'Unknown Name',
+      profileImage: signinResult.user.photoURL ?? '',
+    })
+  )
 }
 
 export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
