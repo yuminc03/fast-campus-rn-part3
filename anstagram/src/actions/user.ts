@@ -81,54 +81,17 @@ export const signIn = (idToken: string): TypeUserThunkAction => async (dispatch)
   )
 }
 
-export const getMyFeedList = (): TypeUserThunkAction => async (dispatch) => {
+export const getMyFeedList = (): TypeUserThunkAction => async (dispatch, getState) => {
   dispatch(getMyFeedRequest());
-  await sleep(500);
-  dispatch(getMyFeedSuccess([{
-    id: 'ID_01',
-    content: 'CONTENT_01',
-    writer: {
-      name: 'WRITER_NAME_01',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_02',
-    content: 'CONTENT_02',
-    writer: {
-      name: 'WRITER_NAME_02',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_03',
-    content: 'CONTENT_03',
-    writer: {
-      name: 'WRITER_NAME_03',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_04',
-    content: 'CONTENT_04',
-    writer: {
-      name: 'WRITER_NAME_04',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  ]));
+  const lastFeedList = await database().ref('/feed').once('value').then((snapshot) => snapshot.val());
+  const result = Object.keys(lastFeedList).map((key) => {
+    return {
+      ...lastFeedList[key],
+      id: key,
+      likeHistory: lastFeedList[key].likeHistory ?? []
+    };
+  }).filter((item) => item.writer.uid === getState().userInfo.userInfo.uid);
+  dispatch(getMyFeedSuccess(result));
 }
 
 export type TypeUserThunkAction = ThunkAction<Promise<void>, RootReducer, undefined, TypeUserInfoActions>
