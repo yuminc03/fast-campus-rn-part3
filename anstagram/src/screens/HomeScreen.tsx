@@ -41,7 +41,7 @@ export const HomeScreen: React.FC = () => {
               writer={item.writer.name}
               onPressFeed={() => {}}
             />
-          )
+          );
         }}
         ItemSeparatorComponent={() => (
           <Spacer space={24} />

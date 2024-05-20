@@ -1,11 +1,11 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import storage from '@react-native-firebase/storage';
 import database from '@react-native-firebase/database';
+import { Platform } from 'react-native';
 
 import { FeedInfo } from "../@types/FeedInfo";
 import { RootReducer } from "../store";
 import { sleep } from "../utils/sleep";
-import { Platform } from 'react-native';
 
 export const GET_FEED_LIST_REQUEST = 'GET_FEED_LIST_REQUEST' as const;
 export const GET_FEED_LIST_SUCCESS = 'GET_FEED_LIST_SUCCESS' as const;
@@ -40,52 +40,16 @@ export const getFeedListFailure = () => {
 
 export const getFeedList = (): TypeFeedListThunkAction => async (dispatch) => {
   dispatch(getFeedListRequest());
-  await sleep(500);
-  dispatch(getFeedListSuccess([{
-    id: 'ID_01',
-    content: 'CONTENT_01',
-    writer: {
-      name: 'WRITER_NAME_01',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_02',
-    content: 'CONTENT_02',
-    writer: {
-      name: 'WRITER_NAME_02',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_03',
-    content: 'CONTENT_03',
-    writer: {
-      name: 'WRITER_NAME_03',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  {
-    id: 'ID_04',
-    content: 'CONTENT_04',
-    writer: {
-      name: 'WRITER_NAME_04',
-      uid: 'WRITER_UID',
-    },
-    imageUrl: 'https://docs.expo.dev/static/images/tutorial/background-image.png',
-    likeHistory: ['UID_01', 'UID_02', 'UID_03'],
-    createdAt: new Date().getTime()
-  },
-  ]));
+  const lastFeedList = await database().ref('/feed').once('value').then((snapshot) => snapshot.val());
+  const result = Object.keys(lastFeedList).map((key) => {
+    return {
+      ...lastFeedList[key],
+      id: key,
+      likeHistory: lastFeedList[key].likeHistory ?? []
+    };
+  });
+
+  dispatch(getFeedListSuccess(result));
 }
 
 export const createFeedRequest = () => {
@@ -110,7 +74,7 @@ export const createFeedFailure = () => {
 export const createFeed = (item: Omit<FeedInfo, 'id' | 'writer' | 'createdAt' | 'likeHistory'>): TypeFeedListThunkAction => async (dispatch, getState) => {
   dispatch(createFeedRequest());
 
-  const createAt = new Date().getTime();
+  const createdAt = new Date().getTime();
   const userInfo = getState().userInfo.userInfo;
   const pickPhotoUrlList = item.imageUrl.split('/');
   const pickPhotoFileName = pickPhotoUrlList[pickPhotoUrlList.length - 1];
@@ -118,9 +82,41 @@ export const createFeed = (item: Omit<FeedInfo, 'id' | 'writer' | 'createdAt' | 
   const putFileUrl = await storage().ref(pickPhotoFileName)
     .putFile(Platform.OS === 'ios' ? item.imageUrl.replace('file://', '') : item.imageUrl)
     .then((result) => storage().ref(result.metadata.fullPath).getDownloadURL());
+  const feedDB = await database().ref('/feed');
+  const saveItem: Omit<FeedInfo, 'id'> = {
+    content: item.content,
+    writer: {
+      name: userInfo?.name ?? 'Unknown',
+      uid: userInfo?.uid ?? 'Unknown',
+    },
+    imageUrl: putFileUrl,
+    likeHistory: [],
+    createdAt,
+  };
 
-  await sleep(200);
+  await feedDB.push({
+    ...saveItem,
+  });
+  
+  const lastFeedList = await feedDB.once('value').then((snapshot) => snapshot.val());
+  Object.keys(lastFeedList).forEach((key) => {
+    const item = lastFeedList[key];
+    if (item.createAt == createdAt && putFileUrl === item.imageUrl) {
+      dispatch(
+        createFeedSuccess({
+          id: key,
+          content: item.content,
+          writer: item.writer,
+          imageUrl: item.imageUrl,
+          likeHistory: item.likeHistory ?? [],
+          createdAt,
+        })
+      );
+    }
+  });
 
+  // await sleep(200);
+  // 
   // dispatch(createFeedSuccess({
   //   id: 'ID_010',
   //   content: item.content,
