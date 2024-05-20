@@ -5,10 +5,13 @@ import { Header } from '../components/Header/Header';
 import { FeedListItem } from '../components/FeedListItem';
 import { Spacer } from '../components/Spacer';
 import { useRootNavigation, useRootRoute } from '../navigations/RootStackNavigation';
+import { useDispatch } from 'react-redux';
+import { TypeFeedListDispatch, favoriteFeed } from '../actions/feed';
 
 export const FeedListScreen: React.FC = () => {
   const route = useRootRoute<'FeedList'>();
   const navigation = useRootNavigation<'FeedList'>();
+  const dispatch = useDispatch<TypeFeedListDispatch>();
 
   return (
     <View style={{flex: 1}}>
@@ -28,8 +31,11 @@ export const FeedListScreen: React.FC = () => {
               likeCount={item.likeHistory.length}
               writer={item.writer.name}
               onPressFeed={() => {}}
+              onPressFavorite={() => {
+                dispatch(favoriteFeed(item));
+              }}
             />
-          )
+          );
         }}
         ItemSeparatorComponent={() => (
           <Spacer space={24} />

@@ -14,6 +14,7 @@ export const FeedListItem: React.FC<{
   writer: string;
   comment: string;
   onPressFeed: () => void;
+  onPressFavorite: () => void;
 }> = (props) => {
   const {width} = useWindowDimensions();
 
@@ -21,13 +22,15 @@ export const FeedListItem: React.FC<{
     <Button onPress={props.onPressFeed}>
       <View>
         <RemoteImage url={props.image} width={width} height={width} />
-        <View style={{paddingHorizontal: 12, paddingVertical: 6}}>
-          <Icon 
-            name={props.isLiked ? 'heart' : 'heart-outline'} 
-            size={20} 
-            color={props.isLiked ? 'red' : 'black'}
-          />
-        </View>
+        <Button onPress={props.onPressFavorite}>
+          <View style={{paddingHorizontal: 12, paddingVertical: 6}}>
+            <Icon 
+              name={props.isLiked ? 'heart' : 'heart-outline'} 
+              size={20} 
+              color={props.isLiked ? 'red' : 'black'}
+            />
+          </View>
+        </Button>
         <View style={{paddingHorizontal: 12}}>
           <Typography fontSize={16}>{`좋아요 ${props.likeCount}개`}</Typography>
           <Spacer space={4} />
