@@ -41,7 +41,10 @@ export const HomeScreen: React.FC = () => {
               isLiked={false}
               likeCount={item.likeHistory.length}
               writer={item.writer.name}
-              onPressFeed={() => {}}
+              craetedAt={item.createdAt}
+              onPressFeed={() => {
+                console.log('onPressFeed');
+              }}
               onPressFavorite={() => {
                 dispatch(favoriteFeed(item));
               }}

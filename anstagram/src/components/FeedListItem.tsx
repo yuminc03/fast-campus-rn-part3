@@ -7,6 +7,7 @@ import { Icon } from './Icons';
 import { Typography } from './Typography';
 import { Spacer } from './Spacer';
 import { DoubleTabButton } from './DoubleTabButton';
+import { getMillisToDateString } from '../utils/DateUtils';
 
 export const FeedListItem: React.FC<{
   image: string;
@@ -14,6 +15,7 @@ export const FeedListItem: React.FC<{
   likeCount: number;
   writer: string;
   comment: string;
+  craetedAt: number;
   onPressFeed: () => void;
   onPressFavorite: () => void;
 }> = (props) => {
@@ -62,15 +64,20 @@ export const FeedListItem: React.FC<{
             </View>
           </View>
         </DoubleTabButton>
-        <Button onPress={props.onPressFavorite}>
-          <View style={{paddingHorizontal: 12, paddingVertical: 6}}>
-            <Icon 
-              name={props.isLiked ? 'heart' : 'heart-outline'} 
-              size={20} 
-              color={props.isLiked ? 'red' : 'black'}
-            />
-          </View>
-        </Button>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Button onPress={props.onPressFavorite}>
+            <View style={{paddingHorizontal: 12, paddingVertical: 6}}>
+              <Icon 
+                name={props.isLiked ? 'heart' : 'heart-outline'} 
+                size={20} 
+                color={props.isLiked ? 'red' : 'black'}
+              />
+            </View>
+          </Button>
+          <Typography fontSize={16} color='gray'>
+            {getMillisToDateString(props.craetedAt)}
+          </Typography>
+        </View>
         <View style={{paddingHorizontal: 12}}>
           <Typography fontSize={16}>{`좋아요 ${props.likeCount}개`}</Typography>
           <Spacer space={4} />
